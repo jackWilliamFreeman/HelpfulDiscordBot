@@ -1,23 +1,20 @@
+
+from decouple import config
 import discord
-import os
-from discord.ext import commands, tasks
+from discord.ext import commands
 
+token = config('TOKEN')
+bot = commands.Bot(command_prefix="$", case_insensitive=True)
 
-intents = discord.Intents.all()
-client = discord.Client(intents=intents)
-token = os.getenv('TOKEN')
-channel = os.getenv('CHANNEL')
-bot = commands.Bot(command_prefix='!')
-
-@client.event
-async def on_message(message):
-    channel = client.get_channel(channel)
-
-        if not message.guild:
-        await message.channel.send('not today mate')
 
 @bot.command()
-async def test(ctx, arg):
-    await ctx.send(arg)
-    
-client.run(token) 
+async def stonkssupportbot(ctx, *args):
+    if len(args) > 0:
+        if len(args) == 3:
+            if args[0].lower() == "back" and args[1].lower() == "me" and args[2].lower() == "up":
+                await ctx.reply("you are right and your opponents are wrong")
+
+    if len(args) == 0:
+        await ctx.reply("wut?")
+
+bot.run(token) 
