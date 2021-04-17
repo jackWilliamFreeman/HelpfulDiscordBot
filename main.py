@@ -17,4 +17,9 @@ async def stonkssupportbot(ctx, *args):
     if len(args) == 0:
         await ctx.reply("wut?")
 
+@bot.event
+async def on_message(message):
+    if(message.author.id == 550616372120387585) and message.content.lower().find('gme') != -1:
+        await message.channel.send("gotcha")
+
 bot.run(token) 
