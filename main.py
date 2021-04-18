@@ -7,10 +7,8 @@ import boto3
 from keep_alive import keep_alive
 
 load_dotenv()
-#token = os.getenv('TOKEN')
-token = os.getenv('TEST_TOKEN')
-#stonks_bot_id= int(os.getenv('STONKS_BOT_ID'))
-stonks_bot_id= int(os.getenv('TEST_STONKS_BOT_ID'))
+token = os.getenv('TOKEN')
+stonks_bot_id= int(os.getenv('STONKS_BOT_ID'))
 finnhub_token = os.getenv("FINNHUB_TOKEN")
 aws_key = os.getenv('AWS_ACCESS_KEY_ID')
 aws_secret = os.getenv('AWS_SECRET_ACCESS_KEY')
