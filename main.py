@@ -1,16 +1,30 @@
 import finnhub
-from decouple import config
+import os
+from  dotenv import load_dotenv
 import discord
 from discord.ext import commands
 import boto3
+from keep_alive import keep_alive
 
-token = config('TOKEN')
-stonks_bot_id= int(config('STONKS_BOT_ID'))
-finnhub_token = config("FINNHUB_TOKEN")
+load_dotenv()
+#token = os.getenv('TOKEN')
+token = os.getenv('TEST_TOKEN')
+#stonks_bot_id= int(os.getenv('STONKS_BOT_ID'))
+stonks_bot_id= int(os.getenv('TEST_STONKS_BOT_ID'))
+finnhub_token = os.getenv("FINNHUB_TOKEN")
+aws_key = os.getenv('AWS_ACCESS_KEY_ID')
+aws_secret = os.getenv('AWS_SECRET_ACCESS_KEY')
+aws_region = os.getenv('REGION')
 
 bot = commands.Bot(command_prefix="$", case_insensitive=True)
 finnhub_client = finnhub.Client(api_key=finnhub_token)
-dynamodb = boto3.resource('dynamodb')
+
+dynamodb = boto3.resource('dynamodb',
+    aws_access_key_id=aws_key,
+    aws_secret_access_key=aws_secret,
+    region_name=aws_region
+     )
+
 table = dynamodb.Table('last_price')
 initial_buyin = 115
 
@@ -41,7 +55,7 @@ async def on_message(message):
         if dem_gains < old_gains:
             await message.channel.send("Oh no Ian has lost some gains and sits at {}%!\r\n it's not too late you can get help at: https://www.lifeline.org.au/".format(dem_gains))
         if dem_gains == old_gains:
-            await message.channel.send("Ian's gainst haven't changed since last time I checked (still at {}%).".format(dem_gains))
+            await message.channel.send("Ian's gainst haven't changed, breathe easy kids (still at {}%).".format(dem_gains))
 
 def get_gains():
      quote = finnhub_client.quote('GME')
@@ -65,4 +79,5 @@ def save_gains(gains):
     }
 )
 
+keep_alive()
 bot.run(token) 
