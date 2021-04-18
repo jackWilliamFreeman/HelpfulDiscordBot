@@ -7,12 +7,12 @@ import boto3
 from keep_alive import keep_alive
 
 load_dotenv()
-token = os.getenv('TOKEN')
-stonks_bot_id= int(os.getenv('STONKS_BOT_ID'))
-finnhub_token = os.getenv("FINNHUB_TOKEN")
-aws_key = os.getenv('AWS_ACCESS_KEY_ID')
-aws_secret = os.getenv('AWS_SECRET_ACCESS_KEY')
-aws_region = os.getenv('REGION')
+token = os.environ['TOKEN']
+stonks_bot_id= int(os.environ['STONKS_BOT_ID'])
+finnhub_token = os.environ["FINNHUB_TOKEN"]
+aws_key = os.environ['AWS_ACCESS_KEY_ID']
+aws_secret = os.environ['AWS_SECRET_ACCESS_KEY']
+aws_region = os.environ['REGION']
 
 bot = commands.Bot(command_prefix="$", case_insensitive=True)
 finnhub_client = finnhub.Client(api_key=finnhub_token)
