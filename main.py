@@ -4,6 +4,7 @@ from  dotenv import load_dotenv
 import discord
 from discord.ext import commands
 import boto3
+import time
 
 load_dotenv()
 token = os.environ['TOKEN']
@@ -37,7 +38,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if(message.author.id == stonks_bot_id) and message.content.startswith('GME YOLO'):
-        dem_gains = get_gains()
+        dem_gains = await get_gains(message)
         old_gains = get_last_gains()
         save_gains(dem_gains)
         if dem_gains > old_gains:
@@ -47,8 +48,15 @@ async def on_message(message):
         if dem_gains == old_gains:
             await message.channel.send("Ian's gains haven't changed, breathe easy kids (still at {}%).".format(dem_gains))
 
-def get_gains():
-     quote = finnhub_client.quote('GME')
+async def get_gains(message):
+     try:
+        quote = finnhub_client.quote('GME')
+     except:
+        time.sleep(1)
+        try:
+            quote = finnhub_client.quote('GME')
+        except:
+            await message.channel.send("I can't determine if Ian is up or down. It may be time to panic.")
      current_price = quote["c"]
      dem_gains = round((current_price/initial_buyin - 1) * 100,2)
      return dem_gains
