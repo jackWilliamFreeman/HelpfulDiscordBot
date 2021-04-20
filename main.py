@@ -13,7 +13,7 @@ aws_key = os.environ['AWS_ACCESS_KEY_ID']
 aws_secret = os.environ['AWS_SECRET_ACCESS_KEY']
 aws_region = os.environ['REGION']
 
-bot = commands.Bot(command_prefix="$", case_insensitive=True)
+bot = commands.Bot(command_prefix="!", case_insensitive=True)
 finnhub_client = finnhub.Client(api_key=finnhub_token)
 
 dynamodb = boto3.resource('dynamodb',
@@ -29,17 +29,7 @@ initial_buyin = 115.92
 @bot.event
 async def on_ready():
     print("I'm ready.")
-
-#command entry
-@bot.command()
-async def stonkssupportbot(ctx, *args):
-    if len(args) > 0:
-        if len(args) == 3:
-            if args[0].lower() == "back" and args[1].lower() == "me" and args[2].lower() == "up":
-                await ctx.reply("you are right and your opponents are wrong")
-
-    if len(args) == 0:
-        await ctx.reply("wut?")
+    print(f'{bot.user.name} has connected to discord!')
 
 @bot.event
 async def on_message(message):
