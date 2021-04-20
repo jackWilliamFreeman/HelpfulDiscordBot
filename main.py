@@ -4,7 +4,6 @@ from  dotenv import load_dotenv
 import discord
 from discord.ext import commands
 import boto3
-from keep_alive import keep_alive
 
 load_dotenv()
 token = os.environ['TOKEN']
@@ -77,5 +76,4 @@ def save_gains(gains):
     }
 )
 
-keep_alive()
 bot.run(token) 
