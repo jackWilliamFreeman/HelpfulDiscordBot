@@ -23,7 +23,7 @@ dynamodb = boto3.resource('dynamodb',
      )
 
 table = dynamodb.Table('last_price')
-initial_buyin = 115
+initial_buyin = 115.92
 
 
 @bot.event
@@ -43,16 +43,16 @@ async def stonkssupportbot(ctx, *args):
 
 @bot.event
 async def on_message(message):
-    if(message.author.id == stonks_bot_id):
+    if(message.author.id == stonks_bot_id) and message.content.startswith('GME YOLO'):
         dem_gains = get_gains()
         old_gains = get_last_gains()
         save_gains(dem_gains)
         if dem_gains > old_gains:
             await message.channel.send("Congratulations Ian on your winning Ape Strategy, you have improved on last time!")
         if dem_gains < old_gains:
-            await message.channel.send("Oh no Ian has lost some gains and sits at {}%!\r\n it's not too late you can get help at: https://www.lifeline.org.au/".format(dem_gains))
+            await message.channel.send("Oh no Ian has lost some gains and sits at {}%!\r\n it's not too late you can get help at: https://gaaustralia.org.au/".format(dem_gains))
         if dem_gains == old_gains:
-            await message.channel.send("Ian's gainst haven't changed, breathe easy kids (still at {}%).".format(dem_gains))
+            await message.channel.send("Ian's gains haven't changed, breathe easy kids (still at {}%).".format(dem_gains))
 
 def get_gains():
      quote = finnhub_client.quote('GME')
