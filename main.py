@@ -30,6 +30,9 @@ initial_buyin = 115.92
 async def on_ready():
     print("I'm ready.")
     print(f'{bot.user.name} has connected to discord!')
+    await bot.change_presence(activity = discord.Activity(
+                          type = discord.ActivityType.watching, 
+                          name = 'Porn on Disney+'))
 
 @bot.event
 async def on_message(message):
